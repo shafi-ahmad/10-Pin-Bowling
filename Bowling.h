@@ -7,14 +7,13 @@
 
 using namespace std;
 class Bowling {
-  public:
-	Bowling();
+ public:
+   Bowling();
 	~Bowling();
 	int runGame();
 	const Player getPlayer() const { return m_player; }
-  private:
+ private:
 	Player m_player; // Single player game
-    Display display; // Display the output 
+   Display display; // Display the output 
 };
-
 #endif

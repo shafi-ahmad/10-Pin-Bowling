@@ -9,42 +9,42 @@ Player::~Player() { }
 
 int Player::bowlBall(int currentFrame) {
 	int scoreThisBowl = -1;
-    printf("How many pins were hit on this bowl? :");
-    scanf("%d", &scoreThisBowl);
-    // Validate the input score
+   printf("Number of pins were hit for this bowl: ");
+   scanf("%d", &scoreThisBowl);
+   // Validate the input score
 	if(!isValidScore(scoreThisBowl, currentFrame)){
-        // Failure case
-        return scoreThisBowl + m_currentScore.m_ball[0];
-    }
-    // Update the score table	
+      // Failure case
+      return scoreThisBowl + m_currentScore.m_ball[0];
+   }
+   // Update the score table	
 	for (int i = 0; i < (int)m_scores.size(); i++) {
 		m_scores[i].update(scoreThisBowl);
-    }
-    // Update the score for each shot in a particular frame
+   }
+   // Update the score for each shot in a particular frame
 	m_currentScore.setScore(m_ballNum, scoreThisBowl);
 	m_ballNum++;
 	if (m_ballNum == 1 && !m_currentScore.isStrike()) {
 		return 0;
-    }
-    // Special case for final frame
+   }
+   // Special case for final frame
 	if (currentFrame == 10)	{
-		if (m_ballNum == 1) {
+		 if (m_ballNum == 1) {
 			return 0;
-        }
+       }
 	    else if (m_ballNum == 2) {
 		    if (m_currentScore.isStrike() || m_currentScore.isSpare()) {
 			    return 0;
-            }
+          }
 		    else if (!m_currentScore.isSpare()) {
 			    m_currentScore.setScore(2, 0);
-            }
+          }
 	    }
 	}
 	m_scores.push_back(m_currentScore);
 	m_currentScore = Score();
-    // Reset the ballNum for next frame.
+   // Reset the ballNum for next frame.
 	m_ballNum = 0;
-    // End of all shots in each frame  
+   // End of all shots in each frame  
 	return 1;
 }
 
@@ -52,11 +52,11 @@ int Player::bowlBall(int currentFrame) {
 int Player::calcScore() {
 	int totalScore = 0;
 	if (m_scores.empty()) {
-        return 0;
-    }
+      return 0;
+   }
 	for (int i = 0; i < (int)m_scores.size(); i++) {
 		totalScore += m_scores[i].getTotal();
-    }
+   }
 	return totalScore;
 }
 
@@ -64,14 +64,14 @@ int Player::calcScore() {
 bool Player::isValidScore(int score, int frame) {
 	if (score < 0 || score > 10) {
 		return false;
-    }
+   }
 	if (frame != 10) {
 		if (m_ballNum == 1 && m_currentScore.m_ball[0] + score > 10) {
 			return false;
-        }
+      }
 		if (m_ballNum == 2) {
 			return false;
-        }
+      }
 	}
 	return true;
 }
